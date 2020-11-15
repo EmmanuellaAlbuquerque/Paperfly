@@ -12,7 +12,7 @@ import java.io.ObjectOutputStream;
 
 public class HandlePersistence {
 
-  public static void writeBinaryFile(HashMap<String, User> users, String filename) {
+  public static void writeBinaryFile(HashMap<String, User> users, String filename) throws IOException {
     File file = new File(filename);
     try {
       file.delete();
@@ -22,12 +22,12 @@ public class HandlePersistence {
       objOutput.writeObject(users);
       objOutput.close();
 
-    } catch(IOException error) {
-        System.out.printf("IOException error: %s", error.getMessage());
+    } catch(IOException errorIO) {
+        throw errorIO;
     }
   }
 
-  public static HashMap<String, User> readBinaryFile(String filename) {
+  public static HashMap<String, User> readBinaryFile(String filename) throws IOException {
     HashMap<String, User> users = new HashMap<String, User>();
     try {
       File file = new File(filename);
@@ -37,7 +37,7 @@ public class HandlePersistence {
         objInput.close();
       }
     } catch(IOException errorIO) {
-        System.out.printf("IOException error: %s", errorIO.getMessage());
+        throw errorIO;
     } catch(ClassNotFoundException errorClass) {
         System.out.printf("ClassNotFoundException error: %s", errorClass.getMessage());
     }

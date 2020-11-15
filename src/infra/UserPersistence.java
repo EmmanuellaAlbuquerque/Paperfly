@@ -1,5 +1,6 @@
 package infra;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 import business.model.User;
@@ -7,7 +8,12 @@ import business.model.User;
 public class UserPersistence {
   public HashMap<String, User> loadUsers() {
     HashMap<String, User> usersFile = new HashMap<String, User>();
-    usersFile = HandlePersistence.readBinaryFile("teste.bin");
+    try {
+		  usersFile = HandlePersistence.readBinaryFile("teste.bin");
+	} catch (IOException e) {
+		System.out.printf("Não foi possível carregar os usuários.");
+		e.printStackTrace();
+	}
     return usersFile;
   }
 
@@ -15,6 +21,11 @@ public class UserPersistence {
     HashMap<String, User> usersFile = loadUsers();
     usersFile.putAll(users);
 
-    HandlePersistence.writeBinaryFile(usersFile, "teste.bin");
+    try {
+		HandlePersistence.writeBinaryFile(usersFile, "teste.bin");
+	} catch (IOException e) {
+		System.out.printf("Não foi possível salvar os usuários.");
+		e.printStackTrace();
+	}
   }
 }
