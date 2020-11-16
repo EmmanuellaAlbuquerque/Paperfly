@@ -1,72 +1,61 @@
 package view;
 import java.util.*;
 
+import business.control.UserManager;
+import business.model.User;
+import infra.UserPersistence;
+
 public class UserForm {
   public void menu() {
+    HashMap<String, User> users = new HashMap<String, User>();
+    HashMap<String, User> usersFile = new HashMap<String, User>();
+    UserManager userManager = new UserManager(users);
+    UserPersistence userPersistence = new UserPersistence();
 
-  }
+    Scanner menu = new Scanner (System.in);
+    Scanner input = new Scanner (System.in);
 
-  public static void main(String[] args) {
-    // HashMap<String, User> users = new HashMap<String, User>();
+    while (true) {            
 
-    // UserManager userControl = new UserManager(users);
+    System.out.print("\n\n=-=-=-=-MENU=-=-=-=\n");
+    System.out.print("1 - Add Users       \n");
+    System.out.print("2 - List all Users  \n");
+    System.out.print("3 - Exit            \n");
+    System.out.print("=-=-=-=-=-=-=-=-=-=\n");
+    System.out.print("Enter an option: ");
 
-    // String[] param = {"Monica", "1me3afoo"};
-    // userControl.add(param);
+    int option = menu.nextInt();
 
-    // userControl.listAll();
+    if (option == 3) {
+        System.out.print("\nbye.");
+        menu.close();
+        input.close();
+        break;
+    }
 
-    // UserPersistence userPersistence = new UserPersistence();
-    // userPersistence.saveUsers(users);
+    switch (option) {
+      case 1:
+          String[] param = new String[2];
+          System.out.println("\nAdd Users");
+          System.out.print("Type your Login: ");
+          param[0] = input.nextLine();
+          System.out.print("Type your password: ");
+          param[1] = input.nextLine();
 
+          userManager.add(param);
+          userPersistence.saveUsers(users);
 
-    //--------------------------------------------------------------
+          break;
 
-    // HashMap<String, User> usersFile = new HashMap<String, User>();
-    // UserPersistence userPersistence = new UserPersistence();
-    // usersFile = userPersistence.loadUsers();
+      case 2:
+        usersFile = userPersistence.loadUsers();
+        UserManager userManagerFile = new UserManager(usersFile);
+        userManagerFile.listAll();
+        break;
 
-    // UserManager userControl = new UserManager(usersFile);
-    // userControl.listAll();
-
-
-    // Scanner menu = new Scanner (System.in);
-
-    // while (true) {            
-
-    // System.out.print("-------------MENU-----------\n\n");
-    // System.out.print("|-----------------------------|\n");
-    // System.out.print("| Opção 1 - Adicionar Usuários     |\n");
-    // System.out.print("| Opção 2 - Listas todos os Usuários          |\n");
-    // System.out.print("| Opção 3 - Listar usuário Específico          |\n");
-    // System.out.print("| Opção 4 - Deletar usuário              |\n");
-    // System.out.print("|-----------------------------|\n");
-    // System.out.print("Digite uma opção: ");
-
-    // int opcao = menu.nextInt();
-
-    // if (opcao == 4) {
-    //     System.out.print("\nAté logo!");
-    //     menu.close(); 
-    //     break;
-    // }
-
-    // switch (opcao) {
-    //   case 1:
-    //       System.out.print("\nOpção Novo Cadastro Selecionado");
-    //       break;
-
-    //   case 2:
-    //       System.out.print("\nOpção Clientes Selecionado\n");
-    //       break;
-
-    //   case 3:
-    //       System.out.print("\nOpção Produtos Selecionado\n");
-    //       break;
-
-    //   default:
-    //       System.out.print("\nOpção Inválida!");
-    //       break;
-    // } 
+      default:
+          System.out.print("\nInvalid option!");
+          break;
+    } 
   }}
 }

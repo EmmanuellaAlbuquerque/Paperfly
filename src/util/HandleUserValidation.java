@@ -1,7 +1,7 @@
 package util;
 
-public class HandleUserRegistration {
-  public static Boolean verifyLogin(String login) {
+public class HandleUserValidation {
+  public static Boolean verifyLogin(String login) throws UserLoginException {
     Boolean tamanhoMinMax = false;
     Boolean dontContainNumber = false;
 
@@ -15,13 +15,15 @@ public class HandleUserRegistration {
       }
       
     } catch (UserLoginException e) {
-      e.printStackTrace();
+      // e.printStackTrace();
+      // System.out.println(e.getMessage());
+      throw e;
     }
 
     return tamanhoMinMax && dontContainNumber;
   }
 
-  public static Boolean verifyPassword(String password) {
+  public static Boolean verifyPassword(String password) throws UserPasswordException {
     Boolean checkPassword = false;
 
     try {
@@ -32,7 +34,9 @@ public class HandleUserRegistration {
       }
       
     } catch (UserPasswordException e) {
-      e.printStackTrace();
+      // e.printStackTrace();
+      // System.out.println(e.getMessage());
+      throw e;
     }
 
     return checkPassword;
