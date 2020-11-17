@@ -1,0 +1,10 @@
+./src/infra/UserPersistence.java
+./src/infra/HandlePersistence.java
+./src/view/UserForm.java
+./src/view/Main.java
+./src/business/model/User.java
+./src/business/control/IManager.java
+./src/business/control/UserManager.java
+./src/util/UserLoginException.java
+./src/util/UserPasswordException.java
+./src/util/HandleUserValidation.java
