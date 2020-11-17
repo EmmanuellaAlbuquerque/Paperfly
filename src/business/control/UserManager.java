@@ -17,22 +17,22 @@ public class UserManager implements IManager {
   public void add(String[] param) {
     String login = param[0];
     String password = param[1];
-    Boolean canRegister = false;
+    Boolean canRegister = true;
 
     try {
       HandleUserValidation.verifyLogin(login);
-    canRegister = true;
 
 	} catch (UserLoginException e) {
     System.out.println(e.getMessage());
+    canRegister = false;
 		// e.printStackTrace();
   }
   
   try {
     HandleUserValidation.verifyPassword(password);
-    canRegister = true;
   } catch (UserPasswordException e) {
     System.out.println(e.getMessage());
+    canRegister = false;
   }
 
   // verify parameters methods
