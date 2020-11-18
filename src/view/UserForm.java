@@ -7,8 +7,8 @@ import infra.UserPersistence;
 
 public class UserForm {
   public void menu() {
-    HashMap<String, User> users = new HashMap<String, User>();
-    HashMap<String, User> usersFile = new HashMap<String, User>();
+    TreeMap<String, User> users = new TreeMap<String, User>();
+    TreeMap<String, User> usersFile = new TreeMap<String, User>();
     UserManager userManager = new UserManager(users);
     UserPersistence userPersistence = new UserPersistence();
 

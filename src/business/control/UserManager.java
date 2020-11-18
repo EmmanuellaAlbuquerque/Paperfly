@@ -1,6 +1,5 @@
 package business.control;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.TreeMap;
 
 import business.model.User;
 import util.HandleUserValidation;
@@ -8,9 +7,9 @@ import util.UserLoginException;
 import util.UserPasswordException;
 
 public class UserManager implements IManager {
-  private Map<String, User> users = new HashMap<String, User>();
+  private TreeMap<String, User> users = new TreeMap<String, User>();
 
-  public UserManager(HashMap<String, User> users) {
+  public UserManager(TreeMap<String, User> users) {
     this.users = users;
   }
 
@@ -47,6 +46,7 @@ public class UserManager implements IManager {
 
   }
 
+  // listAllAlphabetical: LISTAR OS USUÁRIOS POR LOGIN EM ORDEM ALFABÉTICA CRESCENTE
   public void listAll() {
     users.forEach((key, value) -> {
       System.out.println("Login: " + key + " | User: " + value);
