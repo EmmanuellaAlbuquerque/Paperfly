@@ -17,8 +17,6 @@ public class HandleUserValidation {
       }
       
     } catch (UserLoginException e) {
-      // e.printStackTrace();
-      // System.out.println(e.getMessage());
       throw e;
     }
 
@@ -36,8 +34,6 @@ public class HandleUserValidation {
       }
       
     } catch (UserPasswordException e) {
-      // e.printStackTrace();
-      // System.out.println(e.getMessage());
       throw e;
     }
 
@@ -55,8 +51,6 @@ public class HandleUserValidation {
       }
       
     } catch (DateFormatException e) {
-      // e.printStackTrace();
-      // System.out.println(e.getMessage());
       throw e;
     }
 

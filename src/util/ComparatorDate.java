@@ -3,7 +3,6 @@ package util;
 import business.model.User;
 import java.util.Comparator;
 
-// EXIBIR USUÁRIOS ORDENADOS POR DATA DE NASCIMENTO DESCRESCENTE.
 public class ComparatorDate implements Comparator<User> {
 
 	@Override

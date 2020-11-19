@@ -2,16 +2,10 @@ package view;
 import java.util.*;
 
 import business.control.UserController;
-import business.model.User;
-import infra.UserPersistence;
-import util.ComparatorDate;
-import util.InfraException;
 
 public class UserForm {
   public void menu() {
-    TreeMap<String, User> users = new TreeMap<String, User>();
     UserController userController = new UserController();
-    UserPersistence userPersistence;
 
     Scanner menu = new Scanner (System.in);
     Scanner input = new Scanner (System.in);
@@ -50,55 +44,15 @@ public class UserForm {
           System.out.print("Ano do nascimento[YYYY]: ");
           param[4] = input.nextLine();
 
-          userPersistence = new UserPersistence();
-
-          try {
-            userController = new UserController(userPersistence.loadUsers());
-          } catch (InfraException e) {
-            System.out.print(e.getMessage());
-            // e.printStackTrace();
-          }
-
           userController.add(param);
-
-          try {
-            userPersistence.saveUsers(userController.getUsers());
-          } catch (InfraException e1) {
-            System.out.print(e1.getMessage());
-            // e1.printStackTrace();
-          }
-
           break;
 
       case 2:
-        userPersistence = new UserPersistence();
-        try {
-          users = userPersistence.loadUsers();
-        } catch (InfraException e) {
-          System.out.print(e.getMessage());
-          // e.printStackTrace();
-        }
-        userController = new UserController(users);
-        userController.listAll();
+          userController.listAllAlphabetical();
         break;
 
       case 3:
-        userPersistence = new UserPersistence();
-        TreeSet<User> usersSet = new TreeSet<User>(new ComparatorDate());
-        try {
-          users = userPersistence.loadUsers();
-        } catch (InfraException e) {
-          System.out.print(e.getMessage());
-          // e.printStackTrace();
-        }
-
-        users.forEach((key, value) -> {
-          usersSet.add(value);
-        });
-
-        usersSet.forEach((value) -> {
-          System.out.println(value.toString());
-        });
+        userController.listAllByBirthDate();
         break;
 
       default:
