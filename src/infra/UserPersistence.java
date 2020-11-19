@@ -12,7 +12,7 @@ public class UserPersistence implements IPersistence {
 		  usersFile = HandlePersistence.readBinaryFile("teste.bin");
 	} catch (IOException e) {
 		System.out.printf("Não foi possível carregar os usuários.");
-		// e.printStackTrace();
+		e.printStackTrace();
 	}
     return usersFile;
   }
@@ -25,7 +25,7 @@ public class UserPersistence implements IPersistence {
 		HandlePersistence.writeBinaryFile(usersFile, "teste.bin");
 	} catch (IOException e) {
 		System.out.printf("Não foi possível salvar os usuários.");
-		// e.printStackTrace();
+		e.printStackTrace();
 	}
   }
 }
