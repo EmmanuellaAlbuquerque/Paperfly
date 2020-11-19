@@ -1,6 +1,6 @@
 package business.control;
 
-public interface IManager {
+public interface IController {
   public void add(String[] param);
   public void listAll();
   public void list(String login);

@@ -2,28 +2,34 @@ package business.control;
 
 import java.util.TreeMap;
 
-import util.Date;
+import business.model.Date;
 import business.model.User;
+import util.DateFormatException;
 import util.HandleUserValidation;
 import util.UserLoginException;
 import util.UserPasswordException;
 
-public class UserManager implements IManager {
+public class UserController implements IController {
   private TreeMap<String, User> users = new TreeMap<String, User>();
 
-  public UserManager() {}
+  public UserController() {}
 
-  public UserManager(TreeMap<String, User> users) {
+  public UserController(TreeMap<String, User> users) {
     this.users = users;
   }
 
   public void add(String[] param) {
     String login = param[0];
     String password = param[1];
-    Date birth_date = new Date(Integer.parseInt(param[2]), Integer.parseInt(param[3]), Integer.parseInt(param[4]));
+    Date birthDate = new Date(Integer.parseInt(param[2]), Integer.parseInt(param[3]), Integer.parseInt(param[4]));
     Boolean canRegister = true;
 
     try {
+
+      if(users.containsKey(login)){
+        throw new UserLoginException("- login already registered.");
+      }
+
       HandleUserValidation.verifyLogin(login);
 
 	} catch (UserLoginException e) {
@@ -39,9 +45,16 @@ public class UserManager implements IManager {
     canRegister = false;
   }
 
+  try {
+    HandleUserValidation.verifyDate(birthDate);
+  } catch (DateFormatException e) {
+    System.out.println(e.getMessage());
+    canRegister = false;
+  }
+
   // verify parameters methods
   if (canRegister) {
-    User user = new User(login, password, birth_date);
+    User user = new User(login, password, birthDate);
     users.put(login, user);
     System.out.println("User created.");
   }

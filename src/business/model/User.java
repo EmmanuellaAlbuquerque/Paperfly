@@ -1,17 +1,17 @@
 package business.model;
 import java.io.Serializable;
 
-import util.Date;
+public class User implements Serializable, Comparable<User>, IUser {
 
-public class User implements Serializable, Comparable<User> {
+	private static final long serialVersionUID = 1L;
   private String login;
   private String password;
-  private Date birth_date;
+  private Date birthDate;
 
-  public User(String login, String password, Date birth_date) {
+  public User(String login, String password, Date birthDate) {
     this.login = login;
     this.password = password;
-    this.birth_date = birth_date;
+    this.birthDate = birthDate;
   }
 
   /**
@@ -43,17 +43,17 @@ public class User implements Serializable, Comparable<User> {
   }
 
   /**
-   * @return Date return the birth_date
+   * @return Date return the birthDate
    */
   public Date getBirthDate() {
-    return birth_date;
+    return birthDate;
   }
 
   /**
-   * @param birth_date the birth_date to set
+   * @param birthDate the birthDate to set
    */
-  public void setBirthDate(Date birth_date) {
-      this.birth_date = birth_date;
+  public void setBirthDate(Date birthDate) {
+      this.birthDate = birthDate;
   }
 
   public int compareTo(User user) {
