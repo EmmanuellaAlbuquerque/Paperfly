@@ -1,14 +1,14 @@
 package infra;
 
 import java.io.IOException;
-import java.util.TreeMap;
+import java.util.TreeSet;
 
 import business.model.User;
 import util.InfraException;
 
 public class UserPersistence implements IPersistence  {
-  public TreeMap<String, User> loadUsers() throws InfraException {
-    TreeMap<String, User> usersFile = new TreeMap<String, User>();
+  public TreeSet<User> loadUsers() throws InfraException {
+    TreeSet<User> usersFile = new TreeSet<User>();
     try {
       usersFile = HandlePersistence.readBinaryFile("database.bin");
 
@@ -21,8 +21,8 @@ public class UserPersistence implements IPersistence  {
     return usersFile;
   }
 
-  public void saveUsers(TreeMap<String, User> users) throws InfraException {
-    TreeMap<String, User> usersFile = new TreeMap<String, User>();
+  public void saveUsers(TreeSet<User> users) throws InfraException {
+    TreeSet<User> usersFile = new TreeSet<User>();
 
     try {
       usersFile = loadUsers();
@@ -30,7 +30,7 @@ public class UserPersistence implements IPersistence  {
       // e.printStackTrace();
     }
 
-    usersFile.putAll(users);
+    usersFile.addAll(users);
 
     try {
 		  HandlePersistence.writeBinaryFile(usersFile, "database.bin");

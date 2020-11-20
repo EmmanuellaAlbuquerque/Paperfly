@@ -1,11 +1,11 @@
 package infra;
 
-import java.util.TreeMap;
+import java.util.TreeSet;
 
 import business.model.User;
 import util.InfraException;
 
 public interface IPersistence {
-  public TreeMap<String, User> loadUsers() throws InfraException;
-  public void saveUsers(TreeMap<String, User> users) throws InfraException;
+  public TreeSet<User> loadUsers() throws InfraException;
+  public void saveUsers(TreeSet<User> users) throws InfraException;
 }

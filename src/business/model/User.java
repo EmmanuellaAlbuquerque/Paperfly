@@ -57,7 +57,7 @@ public class User implements Serializable, Comparable<User>, IUser {
   }
 
   public int compareTo(User user) {
-    return this.login.compareTo(user.getLogin());
+    return this.login.compareToIgnoreCase(user.getLogin());
   }
 
   @Override

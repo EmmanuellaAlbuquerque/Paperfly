@@ -1,6 +1,5 @@
 package business.control;
 
-import java.util.TreeMap;
 import java.util.TreeSet;
 
 import business.model.Date;
@@ -15,27 +14,27 @@ import util.ComparatorDate;
 import util.InfraException;
 
 public class UserController implements IController {
-  private TreeMap<String, User> users = new TreeMap<String, User>();
+  private TreeSet<User> users = new TreeSet<User>();
 
   public UserController() {
     loadFromDatabase();
   }
 
-  public UserController(TreeMap<String, User> users) {
+  public UserController(TreeSet<User> users) {
     this.users = users;
   }
 
   /**
- * @return TreeMap<String, User> return the users
+ * @return TreeSet<User> return the users
  */
-  public TreeMap<String, User> getUsers() {
+  public TreeSet<User> getUsers() {
     return users;
   }
 
   /**
    * @param users the users to set
    */
-  public void setUsers(TreeMap<String, User> users) {
+  public void setUsers(TreeSet<User> users) {
       this.users = users;
   }
 
@@ -47,7 +46,7 @@ public class UserController implements IController {
 
     try {
 
-      if(users.containsKey(login)){
+      if(containsLogin(login)){
         throw new UserLoginException("- login already registered.");
       }
 
@@ -64,7 +63,7 @@ public class UserController implements IController {
 
     if (canRegister) {
       User user = new User(login, password, birthDate);
-      users.put(login, user);
+      users.add(user);
       System.out.println("User created.");
     } else {
       System.out.println("User not created.");
@@ -74,7 +73,7 @@ public class UserController implements IController {
   }
 
   public void listAll() {
-    users.forEach((key, value) -> {
+    users.forEach((value) -> {
       System.out.println(value.toString());
     });
   }
@@ -88,7 +87,7 @@ public class UserController implements IController {
   public void listAllByBirthDate() {
     TreeSet<User> usersSet = new TreeSet<User>(new ComparatorDate());
 
-    users.forEach((key, value) -> {
+    users.forEach((value) -> {
       usersSet.add(value);
     });
 
@@ -120,9 +119,21 @@ public class UserController implements IController {
 
   }
 
+  private Boolean containsLogin(String login){
+    Boolean contains = false;
+
+    for(User user : users) {
+      if(user.getLogin().equals(login)){
+        contains = true;
+      }
+    }
+
+    return contains;
+  }
+
   public void list(String login) {}
 
   public void del(String login) {
-    users.remove(login);
+    // users.remove(login);
   }
 }

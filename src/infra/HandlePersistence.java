@@ -3,7 +3,7 @@ import business.model.User;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.TreeMap;
+import java.util.TreeSet;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -12,7 +12,7 @@ import java.io.ObjectOutputStream;
 
 public class HandlePersistence {
 
-  public static void writeBinaryFile(TreeMap<String, User> users, String filename) throws IOException {
+  public static void writeBinaryFile(TreeSet<User> users, String filename) throws IOException {
     File file = new File(filename);
     try {
       file.delete();
@@ -27,13 +27,13 @@ public class HandlePersistence {
     }
   }
 
-  public static TreeMap<String, User> readBinaryFile(String filename) throws IOException {
-    TreeMap<String, User> users = new TreeMap<String, User>();
+  public static TreeSet<User> readBinaryFile(String filename) throws IOException {
+    TreeSet<User> users = new TreeSet<User>();
     try {
       File file = new File(filename);
       if(file.exists()) {
         ObjectInputStream objInput = new ObjectInputStream(new FileInputStream(file));
-        users = (TreeMap<String, User>)objInput.readObject();
+        users = (TreeSet<User>)objInput.readObject();
         objInput.close();
       }
     } catch(IOException errorIO) {
