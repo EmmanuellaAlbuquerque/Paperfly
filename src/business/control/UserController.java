@@ -4,6 +4,8 @@ import java.util.TreeSet;
 
 import business.model.Date;
 import business.model.User;
+import business.templates.HTMLReport;
+import business.templates.TXTReport;
 import util.DateFormatException;
 import util.HandleUserValidation;
 import util.UserLoginException;
@@ -65,6 +67,13 @@ public class UserController implements IController {
       User user = new User(login, password, birthDate);
       users.add(user);
       System.out.println("User created.");
+      
+      TXTReport txtReport = new TXTReport();
+      HTMLReport htmlReport = new HTMLReport();
+
+      txtReport.generateReport(user);
+      htmlReport.generateReport(user);
+
     } else {
       System.out.println("User not created.");
     }
