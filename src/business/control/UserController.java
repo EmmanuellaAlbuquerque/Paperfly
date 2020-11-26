@@ -10,7 +10,6 @@ import util.DateFormatException;
 import util.HandleUserValidation;
 import util.UserLoginException;
 import util.UserPasswordException;
-
 import infra.UserPersistence;
 import util.ComparatorDate;
 import util.InfraException;
@@ -107,7 +106,7 @@ public class UserController {
   }
 
   private void loadFromDatabase() {
-    UserPersistence userPersistence = new UserPersistence();
+    UserPersistence userPersistence = infra.PersistenceFactory.createPersistence();
 
     try {
       users = userPersistence.loadUsers();
@@ -118,8 +117,7 @@ public class UserController {
   }
 
   private void saveInDatabase() {
-    UserPersistence userPersistence = new UserPersistence();
-
+    UserPersistence userPersistence = infra.PersistenceFactory.createPersistence();
     try {
       userPersistence.saveUsers(users);
     } catch (InfraException e) {
