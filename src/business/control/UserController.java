@@ -15,7 +15,7 @@ import infra.UserPersistence;
 import util.ComparatorDate;
 import util.InfraException;
 
-public class UserController implements IController {
+public class UserController {
   private TreeSet<User> users = new TreeSet<User>();
 
   public UserController() {
@@ -47,8 +47,9 @@ public class UserController implements IController {
     Boolean canRegister = true;
 
     try {
+      User userExists = containsLogin(login);
 
-      if(containsLogin(login)){
+      if(userExists != null) {
         throw new UserLoginException("- login already registered.");
       }
 
@@ -120,7 +121,7 @@ public class UserController implements IController {
     UserPersistence userPersistence = new UserPersistence();
 
     try {
-      userPersistence.saveUsers(getUsers());
+      userPersistence.saveUsers(users);
     } catch (InfraException e) {
       System.out.print(e.getMessage());
       // e1.printStackTrace();
@@ -128,21 +129,26 @@ public class UserController implements IController {
 
   }
 
-  private Boolean containsLogin(String login){
-    Boolean contains = false;
-
+  public User containsLogin(String login){
     for(User user : users) {
       if(user.getLogin().equals(login)){
-        contains = true;
+        return user;
       }
     }
-
-    return contains;
+    return null;
   }
 
-  public void list(String login) {}
-
   public void del(String login) {
-    // users.remove(login);
+    User user = containsLogin(login);
+    if (user != null) {
+      users.remove(user);
+      System.out.println("Usuário removido com sucesso!");
+    }
+    else {
+      System.out.println("Usuário não existe!");
+    }
+
+    listAll();
+    this.saveInDatabase();
   }
 }

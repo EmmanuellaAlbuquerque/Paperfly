@@ -24,11 +24,11 @@ public class UserPersistence implements IPersistence  {
   public void saveUsers(TreeSet<User> users) throws InfraException {
     TreeSet<User> usersFile = new TreeSet<User>();
 
-    try {
-      usersFile = loadUsers();
-    } catch (InfraException e) {
-      // e.printStackTrace();
-    }
+    // try {
+    //   usersFile = loadUsers();
+    // } catch (InfraException e) {
+    //   // e.printStackTrace();
+    // }
 
     usersFile.addAll(users);
 

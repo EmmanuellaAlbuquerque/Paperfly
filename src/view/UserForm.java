@@ -1,11 +1,12 @@
 package view;
 import java.util.*;
 
-import business.control.UserController;
+import business.control.CompanyFacade;
+import business.model.Salary;
 
 public class UserForm {
   public void menu() {
-    UserController userController = new UserController();
+    CompanyFacade companyFacade = CompanyFacade.getInstance();
 
     Scanner menu = new Scanner (System.in);
     Scanner input = new Scanner (System.in);
@@ -14,15 +15,17 @@ public class UserForm {
 
     System.out.print("\n\n=-=-=-=-=-=-=-=-=-=-=-=-=-= MENU =-=-=-=-=-=-=-=-=-=-=-=-=-= \n");
     System.out.print("1 - ADICIONAR USUÁRIOS \n");
-    System.out.print("2 - LISTAR POR ORDEM ALFABÉTICA CRESCENTE  \n");
-    System.out.print("3 - LISTAR POR DATA DE NASCIMENTO DESCRESCENTE \n");
-    System.out.print("4 - Sair \n");
+    System.out.print("2 - REMOVER USUÁRIO \n");
+    System.out.print("3 - LISTAR POR ORDEM ALFABÉTICA CRESCENTE  \n");
+    System.out.print("4 - LISTAR POR DATA DE NASCIMENTO DESCRESCENTE \n");
+    System.out.print("5 - REGISTRAR SALÁRIO DE UM USUÁRIO \n");
+    System.out.print("6 - SAIR \n");
     System.out.print("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= \n");
     System.out.print("Digite uma opção: ");
 
     int option = menu.nextInt();
 
-    if (option == 4) {
+    if (option == 6) {
       System.out.print("\nbye.");
       menu.close();
       input.close();
@@ -44,15 +47,38 @@ public class UserForm {
           System.out.print("Ano do nascimento[YYYY]: ");
           param[4] = input.nextLine();
 
-          userController.add(param);
+          companyFacade.addUsers(param);
           break;
 
       case 2:
-          userController.listAllAlphabetical();
+        String login;
+        System.out.println("\nRemover usuário");
+        System.out.print("Login: ");
+        login = input.nextLine();
+        companyFacade.removeUsers(login);
         break;
 
       case 3:
-        userController.listAllByBirthDate();
+        companyFacade.listAllAlphabetical();
+        break;
+
+      case 4:
+        companyFacade.listAllByBirthDate();
+        break;
+
+      case 5:
+        String userlogin;
+        double price;
+        int yearsOfWork;
+        System.out.println("\nRegistrar salário");
+        System.out.print("Login: ");
+        userlogin = input.nextLine();
+        System.out.print("Preço: ");
+        price = input.nextDouble();
+        System.out.print("Anos de trabalho: ");
+        yearsOfWork = input.nextInt();
+        Salary salary = new Salary(price, yearsOfWork);
+        companyFacade.registerNewSalary(userlogin, salary);
         break;
 
       default:

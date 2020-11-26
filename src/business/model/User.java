@@ -1,5 +1,6 @@
 package business.model;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class User implements Serializable, Comparable<User>, IUser {
 
@@ -7,6 +8,7 @@ public class User implements Serializable, Comparable<User>, IUser {
   private String login;
   private String password;
   private Date birthDate;
+  private ArrayList<Salary> salary = new ArrayList<Salary>();
 
   public User(String login, String password, Date birthDate) {
     this.login = login;
@@ -62,6 +64,20 @@ public class User implements Serializable, Comparable<User>, IUser {
 
   @Override
   public String toString() {
-    return ("Login: " + getLogin() + " Password: " + getPassword()  + " Birth date: " + getBirthDate().showDate());
+    return ("Login: " + getLogin() + " Password: " + getPassword()  + " Birth date: " + getBirthDate().showDate() + " Salary: " + getSalary());
+  }
+
+  /**
+   * @return ArrayList<Salary> return the salary
+   */
+  public ArrayList<Salary> getSalary() {
+      return salary;
+  }
+
+  /**
+   * @param salary the salary to set
+   */
+  public void setSalary(ArrayList<Salary> salary) {
+      this.salary = salary;
   }
 }
