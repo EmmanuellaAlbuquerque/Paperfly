@@ -1,7 +1,11 @@
 package business.model;
 
-public class Salary {
-  private double price;
+import java.io.Serializable;
+
+public class Salary implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	private double price;
 	private int yearsOfWork;
 	
 	public Salary(double price, int yearsOfWork) {

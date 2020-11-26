@@ -10,12 +10,16 @@ import util.DateFormatException;
 import util.HandleUserValidation;
 import util.UserLoginException;
 import util.UserPasswordException;
-import infra.UserPersistence;
+import infra.IPersistence;
+import infra.PersistenceFactory;
+import infra.UserPersistenceFactory;
 import util.ComparatorDate;
 import util.InfraException;
 
 public class UserController {
   private TreeSet<User> users = new TreeSet<User>();
+  private PersistenceFactory persistenceFactory = new UserPersistenceFactory();
+  private IPersistence iPersistence = persistenceFactory.createPersistence();
 
   public UserController() {
     loadFromDatabase();
@@ -105,21 +109,18 @@ public class UserController {
     });
   }
 
-  private void loadFromDatabase() {
-    UserPersistence userPersistence = infra.PersistenceFactory.createPersistence();
-
+  public void loadFromDatabase() {
     try {
-      users = userPersistence.loadUsers();
+      users = iPersistence.loadUsers();
     } catch (InfraException e) {
       System.out.print(e.getMessage());
       // e.printStackTrace();
     }
   }
 
-  private void saveInDatabase() {
-    UserPersistence userPersistence = infra.PersistenceFactory.createPersistence();
+  public void saveInDatabase() {
     try {
-      userPersistence.saveUsers(users);
+      iPersistence.saveUsers(users);
     } catch (InfraException e) {
       System.out.print(e.getMessage());
       // e1.printStackTrace();

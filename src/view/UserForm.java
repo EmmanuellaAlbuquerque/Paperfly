@@ -37,15 +37,15 @@ public class UserForm {
           String[] param = new String[5];
           System.out.println("\nAdicionar Usuários");
           System.out.print("Login: ");
-          param[0] = input.nextLine();
+          param[0] = input.next();
           System.out.print("Senha: ");
-          param[1] = input.nextLine();
+          param[1] = input.next();
           System.out.print("Dia de nascimento[DD]: ");
-          param[2] = input.nextLine();
+          param[2] = input.next();
           System.out.print("Mês de nascimento[MM]: ");
-          param[3] = input.nextLine();
+          param[3] = input.next();
           System.out.print("Ano do nascimento[YYYY]: ");
-          param[4] = input.nextLine();
+          param[4] = input.next();
 
           companyFacade.addUsers(param);
           break;
@@ -54,7 +54,7 @@ public class UserForm {
         String login;
         System.out.println("\nRemover usuário");
         System.out.print("Login: ");
-        login = input.nextLine();
+        login = input.next();
         companyFacade.removeUsers(login);
         break;
 
@@ -72,7 +72,7 @@ public class UserForm {
         int yearsOfWork;
         System.out.println("\nRegistrar salário");
         System.out.print("Login: ");
-        userlogin = input.nextLine();
+        userlogin = input.next();
         System.out.print("Preço: ");
         price = input.nextDouble();
         System.out.print("Anos de trabalho: ");
