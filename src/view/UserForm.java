@@ -1,12 +1,17 @@
 package view;
 import java.util.*;
 
+import business.authentication.GmailAuthenticationAdapter;
+import business.authentication.LinkedinAuthenticationAdapter;
+import business.authentication.LoginAuthentication;
 import business.control.CompanyFacade;
 import business.model.Salary;
 
 public class UserForm {
   public void menu() {
     CompanyFacade companyFacade = CompanyFacade.getInstance();
+    LoginAuthentication loginAuthentication;
+
 
     Scanner menu = new Scanner (System.in);
     Scanner input = new Scanner (System.in);
@@ -19,13 +24,15 @@ public class UserForm {
     System.out.print("3 - LISTAR POR ORDEM ALFABÉTICA CRESCENTE  \n");
     System.out.print("4 - LISTAR POR DATA DE NASCIMENTO DESCRESCENTE \n");
     System.out.print("5 - REGISTRAR SALÁRIO DE UM USUÁRIO \n");
-    System.out.print("6 - SAIR \n");
+    System.out.print("6 - Sign In with Gmail \n");
+    System.out.print("7 - Sign In with Linkedin \n");
+    System.out.print("8 - SAIR \n");
     System.out.print("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= \n");
     System.out.print("Digite uma opção: ");
 
     int option = menu.nextInt();
 
-    if (option == 6) {
+    if (option == 8) {
       System.out.print("\nbye.");
       menu.close();
       input.close();
@@ -79,6 +86,27 @@ public class UserForm {
         yearsOfWork = input.nextInt();
         Salary salary = new Salary(price, yearsOfWork);
         companyFacade.registerNewSalary(userlogin, salary);
+        break;
+
+      case 6:
+        loginAuthentication = new GmailAuthenticationAdapter();
+
+        if (loginAuthentication.authenticate("ana@gmail.com", "kdiw89sak", 0)) {
+          System.out.println("Você se autenticou com sucesso pelo Gmail!");
+        }
+        else {
+          System.out.println("Não foi possível se autenticar pelo Gmail!");
+        }
+        break;
+
+      case 7: 
+        loginAuthentication = new LinkedinAuthenticationAdapter();
+        if (loginAuthentication.authenticate(null, "dk88ekeios", 94442822)) {
+          System.out.println("Você se autenticou com sucesso pelo Linkedin!");
+        }
+        else {
+          System.out.println("Não foi possível se autenticar pelo Linkedin!");
+        }
         break;
 
       default:
