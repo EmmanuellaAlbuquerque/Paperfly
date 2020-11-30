@@ -1,5 +1,5 @@
 package infra;
 
-public interface PersistenceFactory {
-    IPersistence createPersistence();
+public interface PersistenceFactory<E> {
+    IPersistence<E> createPersistence();
 }

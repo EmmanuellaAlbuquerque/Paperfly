@@ -88,4 +88,22 @@ public class Employee extends User {
 	public void setSalaries(ArrayList<Salary> salaries) {
 			this.salaries = salaries;
 	}
+
+	@Override
+  public String toString() {
+		return ("Login: " + getLogin() 
+		+ " Password: " + getPassword()  
+		+ " Birth date: " 
+		+ getBirthDate().showDate() 
+		+ " Fullname: " 
+		+ getFullname() 
+		+ " Address: " 
+		+ getAddress()
+		+ " Email: " 
+		+ getEmail()
+		+ "Phone: " 
+		+ getPhone() 
+		+ " Salary: " 
+		+ getSalary());
+  }
 }

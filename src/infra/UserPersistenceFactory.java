@@ -1,9 +1,11 @@
 package infra;
 
-public class UserPersistenceFactory implements PersistenceFactory {
+import business.model.User;
+
+public class UserPersistenceFactory implements PersistenceFactory<User> {
 
 	@Override
-	public IPersistence createPersistence() {
+	public IPersistence<User> createPersistence() {
     return new UserPersistence();
 	}
 }

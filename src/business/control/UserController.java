@@ -14,15 +14,15 @@ import infra.IPersistence;
 import infra.PersistenceFactory;
 import infra.UserPersistenceFactory;
 import util.ComparatorDate;
-import util.InfraException;
 
 public class UserController {
   private TreeSet<User> users = new TreeSet<User>();
-  private PersistenceFactory persistenceFactory = new UserPersistenceFactory();
-  private IPersistence iPersistence = persistenceFactory.createPersistence();
+  private PersistenceFactory<User> persistenceFactory = new UserPersistenceFactory();
+  private IPersistence<User> iPersistence = persistenceFactory.createPersistence();
+  private DBConnectionController<User> dbConnection = new DBConnectionController<User>();
 
   public UserController() {
-    loadFromDatabase();
+    setUsers(dbConnection.loadFromDatabase(users, iPersistence, "database-users.bin"));
   }
 
   public UserController(TreeSet<User> users) {
@@ -82,7 +82,7 @@ public class UserController {
       System.out.println("User not created.");
     }
   
-    this.saveInDatabase();
+    dbConnection.saveInDatabase(users, iPersistence, "database-users.bin");
   }
 
   public void listAll() {
@@ -109,25 +109,6 @@ public class UserController {
     });
   }
 
-  public void loadFromDatabase() {
-    try {
-      users = iPersistence.loadUsers();
-    } catch (InfraException e) {
-      System.out.print(e.getMessage());
-      // e.printStackTrace();
-    }
-  }
-
-  public void saveInDatabase() {
-    try {
-      iPersistence.saveUsers(users);
-    } catch (InfraException e) {
-      System.out.print(e.getMessage());
-      // e1.printStackTrace();
-    }
-
-  }
-
   public User containsLogin(String login){
     for(User user : users) {
       if(user.getLogin().equals(login)){
@@ -148,6 +129,48 @@ public class UserController {
     }
 
     listAll();
-    this.saveInDatabase();
+    dbConnection.saveInDatabase(users, iPersistence, "database-users.bin");
+  }
+
+  /**
+   * @return PersistenceFactory<User> return the persistenceFactory
+   */
+  public PersistenceFactory<User> getPersistenceFactory() {
+      return persistenceFactory;
+  }
+
+  /**
+   * @param persistenceFactory the persistenceFactory to set
+   */
+  public void setPersistenceFactory(PersistenceFactory<User> persistenceFactory) {
+      this.persistenceFactory = persistenceFactory;
+  }
+
+  /**
+   * @return IPersistence<User> return the iPersistence
+   */
+  public IPersistence<User> getIPersistence() {
+      return iPersistence;
+  }
+
+  /**
+   * @param iPersistence the iPersistence to set
+   */
+  public void setIPersistence(IPersistence<User> iPersistence) {
+      this.iPersistence = iPersistence;
+  }
+
+  /**
+   * @return DBConnectionController<User> return the dbConnection
+   */
+  public DBConnectionController<User> getDbConnection() {
+      return dbConnection;
+  }
+
+  /**
+   * @param dbConnection the dbConnection to set
+   */
+  public void setDbConnection(DBConnectionController<User> dbConnection) {
+      this.dbConnection = dbConnection;
   }
 }

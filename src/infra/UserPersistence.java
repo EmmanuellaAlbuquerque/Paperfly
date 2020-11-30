@@ -1,43 +1,20 @@
 package infra;
 
-import java.io.IOException;
 import java.util.TreeSet;
 
 import business.model.User;
 import util.InfraException;
 
-public class UserPersistence implements IPersistence  {
-  public TreeSet<User> loadUsers() throws InfraException {
-    TreeSet<User> usersFile = new TreeSet<User>();
-    try {
-      usersFile = HandlePersistence.readBinaryFile("database.bin");
+public class UserPersistence implements IPersistence<User> {
+  HandlePersistence<User> handleUserPersistence = new HandlePersistence<User>();
 
-	  } catch (IOException e) {
-    // System.out.printf("Não foi possível carregar os usuários.");
-      throw new InfraException("Não foi possível carregar os usuários.");
-    // e.printStackTrace();
-      // throw e;
-	  }
-    return usersFile;
+  @Override
+  public TreeSet<User> loadUsers(String filename) throws InfraException {
+    return handleUserPersistence.load(filename);
   }
 
-  public void saveUsers(TreeSet<User> users) throws InfraException {
-    TreeSet<User> usersFile = new TreeSet<User>();
-
-    // try {
-    //   usersFile = loadUsers();
-    // } catch (InfraException e) {
-    //   // e.printStackTrace();
-    // }
-
-    usersFile.addAll(users);
-
-    try {
-		  HandlePersistence.writeBinaryFile(usersFile, "database.bin");
-  	} catch (IOException e) {
-      // System.out.printf("Não foi possível salvar os usuários.");
-      throw new InfraException("Não foi possível salvar os usuários.");
-		  // e.printStackTrace();
-	  }
+  @Override
+  public void saveUsers(TreeSet<User> users, String filename) throws InfraException {
+    handleUserPersistence.save(users, filename);
   }
 }

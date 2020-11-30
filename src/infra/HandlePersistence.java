@@ -1,5 +1,5 @@
 package infra;
-import business.model.User;
+import util.InfraException;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,9 +10,9 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-public class HandlePersistence {
+public class HandlePersistence<E> {
 
-  public static void writeBinaryFile(TreeSet<User> users, String filename) throws IOException {
+  public void writeBinaryFile(TreeSet<E> users, String filename) throws IOException {
     File file = new File(filename);
     try {
       file.delete();
@@ -27,13 +27,13 @@ public class HandlePersistence {
     }
   }
 
-  public static TreeSet<User> readBinaryFile(String filename) throws IOException {
-    TreeSet<User> users = new TreeSet<User>();
+  public TreeSet<E> readBinaryFile(String filename) throws IOException {
+    TreeSet<E> users = new TreeSet<E>();
     try {
       File file = new File(filename);
       if(file.exists()) {
         ObjectInputStream objInput = new ObjectInputStream(new FileInputStream(file));
-        users = (TreeSet<User>)objInput.readObject();
+        users = (TreeSet<E>)objInput.readObject();
         objInput.close();
       }
     } catch(IOException errorIO) {
@@ -42,5 +42,36 @@ public class HandlePersistence {
         System.out.printf("ClassNotFoundException error: %s", errorClass.getMessage());
     }
     return(users);
+  }
+
+  public TreeSet<E> load(String filename) throws InfraException {
+    TreeSet<E> usersFile = new TreeSet<E>();
+
+    try {
+      usersFile = readBinaryFile(filename);
+      System.out.println("Carregando...<users>");
+
+    } catch (IOException e) {
+    // System.out.printf("Não foi possível carregar os usuários.");
+      throw new InfraException("Não foi possível carregar os usuários.");
+    // e.printStackTrace();
+      // throw e;
+    }
+    return usersFile;
+  }
+
+  public void save(TreeSet<E> users, String filename) throws InfraException {
+    TreeSet<E> usersFile = new TreeSet<E>();
+
+    usersFile.addAll(users);
+    System.out.println("Salvando...<users>");
+
+    try {
+      writeBinaryFile(usersFile, filename);
+    } catch (IOException e) {
+      // System.out.printf("Não foi possível salvar os usuários.");
+      throw new InfraException("Não foi possível salvar os usuários.");
+      // e.printStackTrace();
+    }
   }
 }

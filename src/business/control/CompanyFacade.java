@@ -40,7 +40,7 @@ public class CompanyFacade {
       salaryController.add(salary);
       salaryController.listAll();
       user.setSalary(salaryController.getSalaries());
-      userController.saveInDatabase();
+      userController.getDbConnection().saveInDatabase(userController.getUsers(), userController.getIPersistence(), "database-users.bin");
     }
     else {
       System.out.println("Usuário não existe");
