@@ -19,10 +19,10 @@ public class UserController {
   private TreeSet<User> users = new TreeSet<User>();
   private PersistenceFactory<User> persistenceFactory = new UserPersistenceFactory();
   private IPersistence<User> iPersistence = persistenceFactory.createPersistence();
-  private DBConnectionController<User> dbConnection = new DBConnectionController<User>();
+  private DBConnectionController<User> dbConnection = new DBConnectionController<User>(iPersistence);
 
   public UserController() {
-    setUsers(dbConnection.loadFromDatabase(users, iPersistence, "database-users.bin"));
+    setUsers(dbConnection.loadFromDatabase("database-users.bin"));
   }
 
   public UserController(TreeSet<User> users) {
@@ -82,7 +82,7 @@ public class UserController {
       System.out.println("User not created.");
     }
   
-    dbConnection.saveInDatabase(users, iPersistence, "database-users.bin");
+    dbConnection.saveInDatabase(users, "database-users.bin");
   }
 
   public void listAll() {
@@ -129,7 +129,7 @@ public class UserController {
     }
 
     listAll();
-    dbConnection.saveInDatabase(users, iPersistence, "database-users.bin");
+    dbConnection.saveInDatabase(users, "database-users.bin");
   }
 
   /**

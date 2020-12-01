@@ -6,18 +6,23 @@ import infra.IPersistence;
 import util.InfraException;
 
 public class DBConnectionController<E> {
+  private IPersistence<E> iPersistence;
+
+  public DBConnectionController(IPersistence<E> iPersistence) {
+    this.iPersistence = iPersistence;
+  }
   
-  public TreeSet<E> loadFromDatabase(TreeSet<E> users, IPersistence<E> iPersistence, String filename) {
+  public TreeSet<E> loadFromDatabase(String filename) {
     try {
-      users = iPersistence.loadUsers(filename);
+      return iPersistence.loadUsers(filename);
     } catch (InfraException e) {
       System.out.print(e.getMessage());
       // e.printStackTrace();
     }
-    return users;
+    return null;
   }
 
-  public void saveInDatabase(TreeSet<E> users, IPersistence<E> iPersistence, String filename) {
+  public void saveInDatabase(TreeSet<E> users, String filename) {
     try {
       iPersistence.saveUsers(users, filename);
     } catch (InfraException e) {

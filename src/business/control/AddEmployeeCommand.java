@@ -3,24 +3,20 @@ package business.control;
 import java.util.TreeSet;
 
 import business.model.Employee;
-import infra.EmployeePersistenceFactory;
-import infra.IPersistence;
-import infra.PersistenceFactory;
 
 public class AddEmployeeCommand implements EmployeeCommand {
 	private TreeSet<Employee> employees = new TreeSet<Employee>();
-	private PersistenceFactory<Employee> persistenceFactory = new EmployeePersistenceFactory();
-	private IPersistence<Employee> iPersistence = persistenceFactory.createPersistence();
-	private DBConnectionController<Employee> dbConnection = new DBConnectionController<Employee>();
+	private DBConnectionController<Employee> dbConnection;
 
-  public AddEmployeeCommand() {
-		setEmployees(dbConnection.loadFromDatabase(employees, iPersistence, "database-employee.bin"));
+  public AddEmployeeCommand(DBConnectionController<Employee> dbConnection) {
+		this.dbConnection = dbConnection;
+		setEmployees(dbConnection.loadFromDatabase("database-employee.bin"));
   }
 
 	@Override
 	public TreeSet<Employee> execute(Employee employee) {
 		employees.add(employee);
-		dbConnection.saveInDatabase(employees, iPersistence, "database-employee.bin");
+		dbConnection.saveInDatabase(employees, "database-employee.bin");
 		return employees;
 	}
 

@@ -105,5 +105,5 @@ public class Employee extends User {
 		+ getPhone() 
 		+ " Salary: " 
 		+ getSalary());
-  }
+	}
 }
