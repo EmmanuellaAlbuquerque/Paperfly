@@ -32,8 +32,15 @@ public class EmployeeController {
     employees = invoker.executeCommand(employee, executeService);
   }
 
-  public void listAll() {
-    employees.forEach((value) -> {
+  public void search(Employee employee) {
+    TreeSet<Employee> employeesResult = new TreeSet<Employee>();
+    executeService = new SearchEmployeeCommand(dbConnection);
+    employeesResult = invoker.executeCommand(employee, executeService);
+    listAll(employeesResult);
+  }
+
+  public void listAll(TreeSet<Employee> employeesSet) {
+    employeesSet.forEach((value) -> {
       System.out.println(value.toString());
     });
   }
@@ -56,9 +63,10 @@ public class EmployeeController {
   //   EmployeeController employeeController =  new EmployeeController();
   //   Date date = new Date(12, 12, 2012);
   //   Employee employee = new Employee("AFADFADF8-7ADF", "dfadf8978ff", date, "Andre Marcelo Andrade", "Rua J", "andre@gmail.com", "3433-8336");
-  //   // employeeController.add("AFADFADF8-7ADF", "dfadf8978ff", date, "Andre", "Rua J", "andre@gmail.com", "3433-8336");
-  //   // employeeController.listAll();
-  //   employeeController.update(employee);
+  //   employeeController.add("AFADFADF8-7ADF", "dfadf8978ff", date, "Andre", "Rua J", "andre@gmail.com", "3433-8336");
   //   employeeController.listAll();
+  //   employeeController.update(employee);
+
+  //   employeeController.search(employee);
   // }
 }
