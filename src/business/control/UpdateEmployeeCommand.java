@@ -19,7 +19,7 @@ public class UpdateEmployeeCommand implements EmployeeCommand {
       if (value.compareTo(employee) == 0) {
 				value.setPassword(employee.getPassword());
 				value.setBirthDate(employee.getBirthDate());
-				value.setFullname(employee.getFullname());
+				// value.setFullname(employee.getFullname());
 				value.setAddress(employee.getAddress());
 				value.setEmail(employee.getEmail());
 				value.setPhone(employee.getPhone());

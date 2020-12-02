@@ -1,5 +1,6 @@
 package business.control;
 
+import java.util.Iterator;
 import java.util.TreeSet;
 
 import business.model.Date;
@@ -7,9 +8,11 @@ import business.model.Employee;
 import infra.EmployeePersistenceFactory;
 import infra.IPersistence;
 import infra.PersistenceFactory;
+import util.NothingToUndoMementoException;
 
 public class EmployeeController {
   protected TreeSet<Employee> employees = new TreeSet<Employee>();
+  private TreeSet<Employee> employeesSet =  new TreeSet<Employee>();
   private EmployeeCommandInvoker invoker = new EmployeeCommandInvoker();
   private EmployeeCommand executeService;
   EmployeesControllerCareTaker employeesControllerCareTaker;
@@ -28,14 +31,16 @@ public class EmployeeController {
     executeService = new AddEmployeeCommand(dbConnection);
     setEmployees(invoker.executeCommand(employee, executeService));
 
-    employeesControllerCareTaker.addMemento(new EmployeesMemento(employees));
+    employeesSet.add(employee);
+    employeesControllerCareTaker.addMemento(new EmployeesMemento(new TreeSet<>(employeesSet)));
   }
 
   public void update(Employee employee) {
     executeService = new UpdateEmployeeCommand(dbConnection);
     employees = invoker.executeCommand(employee, executeService);
 
-    employeesControllerCareTaker.addMemento(new EmployeesMemento(employees));
+    employeesSet.add(employee);
+    employeesControllerCareTaker.addMemento(new EmployeesMemento(employeesSet));
   }
 
   public void search(Employee employee) {
@@ -46,7 +51,21 @@ public class EmployeeController {
   }
 
   public void undoEmployeesUpdate() {
-    employees = employeesControllerCareTaker.getLastSavedState().getSavedEmployeesCollection();
+    TreeSet<Employee> lastSavedMemento = new TreeSet<Employee>();
+    try {
+      lastSavedMemento = employeesControllerCareTaker.getLastSavedState().getSavedEmployeesCollection();
+    } catch (NothingToUndoMementoException e) {
+      System.out.println(e.getMessage());
+    }
+
+    for(Employee employee : new TreeSet<Employee>(employees)) {
+      if (containsID(employee.getLogin(), lastSavedMemento)) {
+        employeesSet.remove(employee);
+        employees.remove(employee);
+        break;
+      }
+    }
+
     dbConnection.saveInDatabase(employees, "database-employee.bin");
   }
 
@@ -56,11 +75,27 @@ public class EmployeeController {
     });
   }
 
+  public Boolean containsID(String employeesID, TreeSet<Employee> employeesMementoSet) {
+    for(Employee employee : employeesMementoSet) {
+      if(employee.getLogin().equals(employeesID)){
+        return true;
+      }
+    }
+    return false;
+  }
+
   /**
 	 * @return TreeSet<Employee> return the employees
 	 */
 	public TreeSet<Employee> getEmployees() {
     return employees;
+}
+
+  /**
+	 * @return TreeSet<Employee> return the employees
+	 */
+	public TreeSet<Employee> getEmployeesSet() {
+    return employeesSet;
 }
 
   /**
@@ -123,14 +158,14 @@ public class EmployeeController {
   // }
 
 
-  public static void main(String[] args) {
-    EmployeeController employeeController = new EmployeeController();
+  // public static void main(String[] args) {
+  //   EmployeeController employeeController = new EmployeeController();
 
-    // employeeController.listAll(employeeController.getEmployees());
+  //   // employeeController.listAll(employeeController.getEmployees());
 
-    // Date date = new Date(12, 12, 1999);
-    // employeeController.add("employeeId", "password", date, "fullname", "address", "email", "phone");
+  //   // Date date = new Date(12, 12, 1999);
+  //   // employeeController.add("employeeId", "password", date, "fullname", "address", "email", "phone");
 
-    employeeController.listAll(employeeController.getEmployees());
-  }
+  //   employeeController.listAll(employeeController.getEmployees());
+  // }
 }

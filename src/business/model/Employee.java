@@ -106,4 +106,8 @@ public class Employee extends User {
 		+ " Salary: " 
 		+ getSalary());
 	}
+
+	public int compareTo(Employee employee) {
+    return getLogin().compareToIgnoreCase(employee.getLogin());
+  }
 }
