@@ -51,7 +51,7 @@ public class EmployeeForm {
       case 2:
         System.out.println("\nAtualizar Empregado");
 
-        Employee employee = new Employee("GSGV6F1EG-1501", "password123", date, "Mathias Firmino Andrade", "Rua J. Sales", "teste@gmail.com", "9878-7543");
+        Employee employee = new Employee("H44QW4R7J-3085", "canad", date, "Mathias Firmino Andrade", "Rua J. Sales", "teste@gmail.com", "9878-7543");
         employeeController.update(employee);
         break;
 

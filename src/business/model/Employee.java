@@ -109,5 +109,9 @@ public class Employee extends User {
 
 	public int compareTo(Employee employee) {
     return getLogin().compareToIgnoreCase(employee.getLogin());
+	}
+	
+	public Boolean compareAll(Employee employee) {
+    return getLogin().equals(employee.getLogin()) && getPassword().equals(employee.getPassword());
   }
 }

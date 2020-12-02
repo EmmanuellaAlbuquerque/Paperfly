@@ -32,15 +32,22 @@ public class EmployeeController {
     setEmployees(invoker.executeCommand(employee, executeService));
 
     employeesSet.add(employee);
-    employeesControllerCareTaker.addMemento(new EmployeesMemento(new TreeSet<>(employeesSet)));
+    employeesControllerCareTaker.addMemento(new EmployeesMemento(new TreeSet<Employee>(employeesSet)));
   }
 
   public void update(Employee employee) {
+    for(Employee employeeElement : employees) {
+      if (employeeElement.compareTo(employee) == 0) {
+        employeesSet.add(employeeElement);
+        employeesControllerCareTaker.addMemento(new EmployeesMemento(new TreeSet<Employee>(employeesSet)));
+      }
+    }
+
     executeService = new UpdateEmployeeCommand(dbConnection);
     employees = invoker.executeCommand(employee, executeService);
 
-    employeesSet.add(employee);
-    employeesControllerCareTaker.addMemento(new EmployeesMemento(employeesSet));
+    // employeesSet.add(employee);
+    // employeesControllerCareTaker.addMemento(new EmployeesMemento(employeesSet));
   }
 
   public void search(Employee employee) {
@@ -61,8 +68,29 @@ public class EmployeeController {
     for(Employee employee : new TreeSet<Employee>(employees)) {
       if (containsID(employee.getLogin(), lastSavedMemento)) {
         employeesSet.remove(employee);
-        employees.remove(employee);
+        // employees.remove(employee);
+        Employee employeeReturn = returnEmployee(employee.getLogin(), lastSavedMemento);
+        if (employeeReturn != null) {
+          for(Employee employeeElement : employees) {
+            if (employeeElement.compareTo(employeeReturn) == 0) {
+              update(employeeReturn);
+            }
+          }
+        }
+
         break;
+      }
+    }
+
+    for(Employee employee : new TreeSet<Employee>(employees)) {
+      if (containsID(employee.getLogin(), lastSavedMemento)) {
+        for(Employee eSet : new TreeSet<Employee>(employeesSet)) {
+          if (eSet.compareAll(employee)) {
+            employeesSet.remove(employee);
+            employees.remove(employee);
+            break;
+          }
+        }
       }
     }
 
@@ -82,6 +110,15 @@ public class EmployeeController {
       }
     }
     return false;
+  }
+
+  public Employee returnEmployee(String employeesID, TreeSet<Employee> employeesMementoSet) {
+    for(Employee employee : employeesMementoSet) {
+      if(employee.getLogin().equals(employeesID)){
+        return employee;
+      }
+    }
+    return null;
   }
 
   /**
