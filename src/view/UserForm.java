@@ -24,15 +24,16 @@ public class UserForm {
     System.out.print("3 - LISTAR POR ORDEM ALFABÉTICA CRESCENTE  \n");
     System.out.print("4 - LISTAR POR DATA DE NASCIMENTO DESCRESCENTE \n");
     System.out.print("5 - REGISTRAR SALÁRIO DE UM USUÁRIO \n");
-    System.out.print("6 - Sign In with Gmail \n");
-    System.out.print("7 - Sign In with Linkedin \n");
-    System.out.print("8 - SAIR \n");
+    System.out.print("6 - DEFINIR TIPO DE FÉRIAS DE UM USUÁRIO \n");
+    System.out.print("7 - Sign In with Gmail \n");
+    System.out.print("8 - Sign In with Linkedin \n");
+    System.out.print("9 - SAIR \n");
     System.out.print("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= \n");
     System.out.print("Digite uma opção: ");
 
     int option = menu.nextInt();
 
-    if (option == 8) {
+    if (option == 9) {
       System.out.print("\nbye.");
       menu.close();
       input.close();
@@ -89,6 +90,10 @@ public class UserForm {
         break;
 
       case 6:
+        System.out.print("\nDefinir tipo de férias");
+        break;
+
+      case 7:
         loginAuthentication = new GmailAuthenticationAdapter();
 
         if (loginAuthentication.authenticate("ana@gmail.com", "kdiw89sak", 0)) {
@@ -99,7 +104,7 @@ public class UserForm {
         }
         break;
 
-      case 7: 
+      case 8: 
         loginAuthentication = new LinkedinAuthenticationAdapter();
         if (loginAuthentication.authenticate(null, "dk88ekeios", 94442822)) {
           System.out.println("Você se autenticou com sucesso pelo Linkedin!");

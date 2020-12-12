@@ -11,8 +11,8 @@ public class Employee extends User {
 	private String phone;
 	private ArrayList<Salary> salaries = new ArrayList<Salary>();
 
-	public Employee(String employeeId, String password, Date birthDate, String fullname, String address, String email, String phone) {
-		super(employeeId, password, birthDate);
+	public Employee(Vacation vac, String employeeId, String password, Date birthDate, String fullname, String address, String email, String phone) {
+		super(employeeId, password, birthDate, vac);
 		this.fullname = fullname;
 		this.address = address;
 		this.email = email;

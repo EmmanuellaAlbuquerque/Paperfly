@@ -4,6 +4,7 @@ import java.util.TreeSet;
 
 import business.model.Date;
 import business.model.User;
+import business.model.Vacation;
 import business.templates.HTMLReport;
 import business.templates.TXTReport;
 import util.DateFormatException;
@@ -47,6 +48,7 @@ public class UserController {
     String login = param[0];
     String password = param[1];
     Date birthDate = new Date();
+    Vacation vac= new Vacation();
     Boolean canRegister = true;
 
     try {
@@ -68,7 +70,7 @@ public class UserController {
     }
 
     if (canRegister) {
-      User user = new User(login, password, birthDate);
+      User user = new User(login, password, birthDate, vac);
       users.add(user);
       System.out.println("User created.");
       

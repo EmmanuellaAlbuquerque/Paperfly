@@ -7,6 +7,7 @@ import java.util.Scanner;
 import business.control.EmployeeController;
 import business.model.Date;
 import business.model.Employee;
+import business.model.Vacation;
 
 public class EmployeeForm {
   public void menu() {
@@ -15,6 +16,7 @@ public class EmployeeForm {
     EmployeeController employeeController = new EmployeeController();
 
     Date date = new Date(1, 2, 1999);
+    Vacation vac = new Vacation();
 
     Scanner menu = new Scanner (System.in);
     Scanner input = new Scanner (System.in);
@@ -45,13 +47,13 @@ public class EmployeeForm {
       case 1:
         System.out.println("\nAdicionar Empregado");
 
-        employeeController.add(generateRandomEmployeeID(), "123", date, generateRandomFullname(), "Rua J", "teste@gmail.com", "9878-7543");
+        employeeController.add(vac, generateRandomEmployeeID(), "123", date, generateRandomFullname(), "Rua J", "teste@gmail.com", "9878-7543");
         break;
 
       case 2:
         System.out.println("\nAtualizar Empregado");
 
-        Employee employee = new Employee("H44QW4R7J-3085", "canad", date, "Mathias Firmino Andrade", "Rua J. Sales", "teste@gmail.com", "9878-7543");
+        Employee employee = new Employee(vac,"H44QW4R7J-3085", "canad", date, "Mathias Firmino Andrade", "Rua J. Sales", "teste@gmail.com", "9878-7543");
         employeeController.update(employee);
         break;
 
@@ -63,7 +65,7 @@ public class EmployeeForm {
       case 4:
         System.out.println("\nPesquisar Empregados");
 
-        Employee employeeSearch = new Employee("default", "123", date, generateRandomFullname(), "default", "default", "default");
+        Employee employeeSearch = new Employee(vac, "default", "123", date, generateRandomFullname(), "default", "default", "default");
         System.out.println("Pesquisando: " + employeeSearch.getFullname() + " ...");
         employeeController.search(employeeSearch);
         break;

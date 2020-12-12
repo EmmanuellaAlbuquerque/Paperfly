@@ -3,6 +3,7 @@ package business.control;
 import java.util.Iterator;
 import java.util.TreeSet;
 
+import business.model.Vacation;
 import business.model.Date;
 import business.model.Employee;
 import infra.EmployeePersistenceFactory;
@@ -26,8 +27,8 @@ public class EmployeeController {
     employeesControllerCareTaker = new EmployeesControllerCareTaker();
   }
 
-  public void add(String employeeId, String password, Date birthDate, String fullname, String address, String email, String phone) {
-    Employee employee = new Employee(employeeId, password, birthDate, fullname, address, email, phone);
+  public void add(Vacation vac, String employeeId, String password, Date birthDate, String fullname, String address, String email, String phone) {
+    Employee employee = new Employee(vac, employeeId, password, birthDate, fullname, address, email, phone);
     executeService = new AddEmployeeCommand(dbConnection);
     setEmployees(invoker.executeCommand(employee, executeService));
 

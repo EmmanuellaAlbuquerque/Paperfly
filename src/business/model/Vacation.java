@@ -10,7 +10,7 @@ public class Vacation {
         this.kindVacation = kindVacation;
     }
 
-    public Vacation(String kindVacation, String getKindVacation) {
+    public Vacation(String kindVacation) {
         this.kindVacation = kindVacation;
     }
 	public Vacation() {
