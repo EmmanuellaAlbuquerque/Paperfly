@@ -10,21 +10,13 @@ public class User implements Serializable, Comparable<User>, IUser {
   private String password;
   private Date birthDate;
   private ArrayList<Salary> salary = new ArrayList<Salary>();
-  private Vacation vac;
+  private String kindVacation;
 
-  public User(Vacation vac2, String password, String login2, Date birthDate2) {
+  public User(String kindVacation, String password, String login2, Date birthDate2) {
     this.login = login2;
     this.password = password;
     this.birthDate = birthDate2;
-    this.setVac(vac2);
-  }
-
-  public Vacation getVac() {
-    return vac;
-  }
-
-  public void setVac(Vacation vac) {
-    this.vac = vac;
+    this.kindVacation = kindVacation;
   }
 
   /**
@@ -93,17 +85,5 @@ public class User implements Serializable, Comparable<User>, IUser {
     this.salary = salary;
   }
 
-  /**
-   * @return Vacation return vac
-   */
-  public Vacation getVacation(Vacation vac) {
-    return vac;
-  }
-
-  /**
-   * @param vac return vac
-   */
-  public void setVaction(Vacation vac) {
-    this.setVac(vac);
-  }
+ 
 }

@@ -21,6 +21,8 @@ public class UserController {
   private PersistenceFactory<User> persistenceFactory = new UserPersistenceFactory();
   private IPersistence<User> iPersistence = persistenceFactory.createPersistence();
   private DBConnectionController<User> dbConnection = new DBConnectionController<User>(iPersistence);
+  Vacation vacation = new Vacation();
+ 
 
   public UserController() {
     setUsers(dbConnection.loadFromDatabase("database-users.bin"));
@@ -48,8 +50,8 @@ public class UserController {
     String login = param[0];
     String password = param[1];
     Date birthDate = new Date();
-    Vacation vac= new Vacation();
     Boolean canRegister = true;
+    String kindVacation;
 
     try {
       User userExists = containsLogin(login);
@@ -70,7 +72,7 @@ public class UserController {
     }
 
     if (canRegister) {
-      User user = new User(vac, password, login, birthDate);
+      User user = new User(vacation.getKindVacation(), password, login, birthDate);
       users.add(user);
       System.out.println("User created.");
       

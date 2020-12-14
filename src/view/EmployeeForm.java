@@ -19,8 +19,6 @@ public class EmployeeForm {
     EmployeeController employeeController = new EmployeeController();
 
     Date date = new Date(1, 2, 1999);
-    VacationDirector vacBuilder = new VacationDirector(new UnifiedVacationBuilder());
-    Vacation vac = new Vacation();
 
     Scanner menu = new Scanner (System.in);
     Scanner input = new Scanner (System.in);
@@ -32,9 +30,10 @@ public class EmployeeForm {
     System.out.print("2 - ATUALIZAR EMPREGADO \n");
     System.out.print("3 - LISTAR EMPREGADOS \n");
     System.out.print("4 - PESQUISAR EMPREGADOS \n");
-    System.out.print("5 - DESFAZER ÚLTIMA ALTERAÇÃO \n");
-    System.out.print("6 - GET EMPLOYEE SET \n");
-    System.out.print("7 - SAIR \n");
+    System.out.print("5 - DEFINIR FÉRIAS \n");
+    System.out.print("6 - DESFAZER ÚLTIMA ALTERAÇÃO \n");
+    System.out.print("7 - GET EMPLOYEE SET \n");
+    System.out.print("8 - SAIR \n");
     System.out.print("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= \n");
     System.out.print("Digite uma opção: ");
 
@@ -51,13 +50,13 @@ public class EmployeeForm {
       case 1:
         System.out.println("\nAdicionar Empregado");
 
-        employeeController.add(vac, generateRandomEmployeeID(), "123", date, generateRandomFullname(), "Rua J", "teste@gmail.com", "9878-7543");
+        employeeController.add("Divididas", generateRandomEmployeeID(), "123", date, generateRandomFullname(), "Rua J", "teste@gmail.com", "9878-7543");
         break;
 
       case 2:
         System.out.println("\nAtualizar Empregado");
 
-        Employee employee = new Employee(vac,"H44QW4R7J-3085", "canad", date, "Mathias Firmino Andrade", "Rua J. Sales", "teste@gmail.com", "9878-7543");
+        Employee employee = new Employee("Unificadas","H44QW4R7J-3085", "canad", date, "Mathias Firmino Andrade", "Rua J. Sales", "teste@gmail.com", "9878-7543");
         employeeController.update(employee);
         break;
 
@@ -69,25 +68,35 @@ public class EmployeeForm {
       case 4:
         System.out.println("\nPesquisar Empregados");
 
-        Employee employeeSearch = new Employee(vac, "default", "123", date, generateRandomFullname(), "default", "default", "default");
+        Employee employeeSearch = new Employee("default", "default", "123", date, generateRandomFullname(), "default", "default", "default");
         System.out.println("Pesquisando: " + employeeSearch.getFullname() + " ...");
         employeeController.search(employeeSearch);
         break;
+      
       case 5:{
         int kind;
         System.out.print("\nDefinir tipo de férias");
-        System.out.print("\ntipo: (1)Unificadas ou (2)Divididas");
+        System.out.print("\ntipo: (1)Unificadas ou (2)Divididas\n");
         kind = input.nextInt();
         switch(kind){
-          case 1:
-          vacBuilder = new VacationDirector(new UnifiedVacationBuilder());
+          case 1:{
+            VacationDirector vacBuilder = new VacationDirector(new UnifiedVacationBuilder());
+            vacBuilder.buildKindVacation();
+            Vacation vacation = vacBuilder.getVacation();
+            Employee employee1 = new Employee(vacation.getKindVacation(),"H44QW4R7J-3085", "canad", date, "Mathias Firmino Andrade", "Rua J. Sales", "teste@gmail.com", "9878-7543");
+            employeeController.update(employee1);
             break;
-          case 2:
-          vacBuilder = new VacationDirector(new DividedVacationBuilder());
-            break;
-        }
-        break;
-        }
+            } 
+            case 2:{
+              VacationDirector vacBuilder = new VacationDirector(new DividedVacationBuilder());
+              vacBuilder.buildKindVacation();
+              Vacation vacation = vacBuilder.getVacation();
+              Employee employee2 = new Employee(vacation.getKindVacation(),"H44QW4R7J-3085", "canad", date, "Mathias Firmino Andrade", "Rua J. Sales", "teste@gmail.com", "9878-7543");
+              employeeController.update(employee2);
+              break;
+              }
+            }
+          }
       case 6:
         System.out.println("\nDesfazer última alteração");
 
