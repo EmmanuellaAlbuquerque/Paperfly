@@ -14,6 +14,7 @@ public class Vacation {
         this.kindVacation = kindVacation;
     }
 	public Vacation() {
-	}
+    }
+    
 
 }

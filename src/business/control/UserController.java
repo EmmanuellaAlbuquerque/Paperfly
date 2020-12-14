@@ -70,7 +70,7 @@ public class UserController {
     }
 
     if (canRegister) {
-      User user = new User(login, password, birthDate, vac);
+      User user = new User(vac, password, login, birthDate);
       users.add(user);
       System.out.println("User created.");
       

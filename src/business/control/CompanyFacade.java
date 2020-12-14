@@ -46,12 +46,12 @@ public class CompanyFacade {
       System.out.println("Usuário não existe");
     }
   }
-
-  public void listAllAlphabetical() {
+   public void listAllAlphabetical() {
     userController.listAllAlphabetical();
   }
 
   public void listAllByBirthDate() {
     userController.listAllByBirthDate();
   }
+
 }

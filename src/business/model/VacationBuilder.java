@@ -7,4 +7,7 @@ public abstract class VacationBuilder {
         vacation = new Vacation();
     }
     public abstract void buildKindVacation();
+	public Vacation getVacation() {
+		return null;
+	}
 }

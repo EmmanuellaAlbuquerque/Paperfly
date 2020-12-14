@@ -8,6 +8,9 @@ import business.control.EmployeeController;
 import business.model.Date;
 import business.model.Employee;
 import business.model.Vacation;
+import business.model.UnifiedVacationBuilder;
+import business.model.DividedVacationBuilder;
+import business.model.VacationDirector;
 
 public class EmployeeForm {
   public void menu() {
@@ -16,6 +19,7 @@ public class EmployeeForm {
     EmployeeController employeeController = new EmployeeController();
 
     Date date = new Date(1, 2, 1999);
+    VacationDirector vacBuilder = new VacationDirector(new UnifiedVacationBuilder());
     Vacation vac = new Vacation();
 
     Scanner menu = new Scanner (System.in);
@@ -36,7 +40,7 @@ public class EmployeeForm {
 
     int option = menu.nextInt();
 
-    if (option == 7) {
+    if (option == 9) {
       System.out.print("\nbye.");
       menu.close();
       input.close();
@@ -69,14 +73,28 @@ public class EmployeeForm {
         System.out.println("Pesquisando: " + employeeSearch.getFullname() + " ...");
         employeeController.search(employeeSearch);
         break;
-
-      case 5:
+      case 5:{
+        int kind;
+        System.out.print("\nDefinir tipo de férias");
+        System.out.print("\ntipo: (1)Unificadas ou (2)Divididas");
+        kind = input.nextInt();
+        switch(kind){
+          case 1:
+          vacBuilder = new VacationDirector(new UnifiedVacationBuilder());
+            break;
+          case 2:
+          vacBuilder = new VacationDirector(new DividedVacationBuilder());
+            break;
+        }
+        break;
+        }
+      case 6:
         System.out.println("\nDesfazer última alteração");
 
         employeeController.undoEmployeesUpdate();
         break;
 
-      case 6:
+      case 7:
         System.out.println("\nEmployee SET");
 
         employeeController.listAll(employeeController.getEmployeesSet());

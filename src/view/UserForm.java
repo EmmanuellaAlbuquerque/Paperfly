@@ -1,6 +1,8 @@
 package view;
 import java.util.*;
 
+import javax.lang.model.util.ElementScanner6;
+
 import business.authentication.GmailAuthenticationAdapter;
 import business.authentication.LinkedinAuthenticationAdapter;
 import business.authentication.LoginAuthentication;
@@ -42,21 +44,21 @@ public class UserForm {
 
     switch (option) {
       case 1:
-          String[] param = new String[5];
-          System.out.println("\nAdicionar Usuários");
-          System.out.print("Login: ");
-          param[0] = input.next();
-          System.out.print("Senha: ");
-          param[1] = input.next();
-          System.out.print("Dia de nascimento[DD]: ");
-          param[2] = input.next();
-          System.out.print("Mês de nascimento[MM]: ");
-          param[3] = input.next();
-          System.out.print("Ano do nascimento[YYYY]: ");
-          param[4] = input.next();
+        String[] param = new String[5];
+        System.out.println("\nAdicionar Usuários");
+        System.out.print("Login: ");
+        param[0] = input.next();
+        System.out.print("Senha: ");
+        param[1] = input.next();
+        System.out.print("Dia de nascimento[DD]: ");
+        param[2] = input.next();
+        System.out.print("Mês de nascimento[MM]: ");
+        param[3] = input.next();
+        System.out.print("Ano do nascimento[YYYY]: ");
+        param[4] = input.next();
 
-          companyFacade.addUsers(param);
-          break;
+        companyFacade.addUsers(param);
+        break;
 
       case 2:
         String login;
@@ -89,10 +91,6 @@ public class UserForm {
         companyFacade.registerNewSalary(userlogin, salary);
         break;
 
-      case 6:
-        System.out.print("\nDefinir tipo de férias");
-        break;
-
       case 7:
         loginAuthentication = new GmailAuthenticationAdapter();
 
@@ -120,4 +118,5 @@ public class UserForm {
 
     } 
   }}
+
 }
