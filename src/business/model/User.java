@@ -12,10 +12,10 @@ public class User implements Serializable, Comparable<User>, IUser {
   private ArrayList<Salary> salary = new ArrayList<Salary>();
   private String kindVacation;
 
-  public User(String kindVacation, String password, String login2, Date birthDate2) {
-    this.login = login2;
+  public User(String kindVacation, String login, String password, Date birthDate) {
+    this.login = login;
     this.password = password;
-    this.birthDate = birthDate2;
+    this.birthDate = birthDate;
     this.kindVacation = kindVacation;
   }
 

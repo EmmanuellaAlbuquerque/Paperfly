@@ -2,20 +2,20 @@ package business.model;
 
 import java.util.ArrayList;
 
-public class CalculateBonusIncrease implements CalculateBonus {
+public class CalculateBonusDecrease implements CalculateBonus {
 
-  public CalculateBonusIncrease() {
-
+  public CalculateBonusDecrease() {
+    
   }
 
-	@Override
+  @Override
 	public double CalculateBankOfHoursBonus(Employee employee) {
     ArrayList<Salary> salaries;
     if (employee.getSalaries().size() > 0) {
       salaries = employee.getSalaries();
       int index = salaries.size() - 1;
       Salary salary = salaries.get(index);
-      if (catchOvertime(salary.getPrice())) {
+      if (catchMissingHours(salary.getPrice())) {
         return calculatesPercentage(salary);
       }
     }
@@ -25,12 +25,12 @@ public class CalculateBonusIncrease implements CalculateBonus {
 		return 0;
   }
   
-  private Boolean catchOvertime(double price) {
-    // Calculate Bank Of Hours Bonus for overtime
+  private Boolean catchMissingHours(double price) {
+    // Calculate Bank Of Hours Bonus for missing hours
     return true;
   }
 
   private double calculatesPercentage(Salary salary) {
-    return salary.getPrice() * 0.10;
+    return salary.getPrice() * -0.10;
   }
 }

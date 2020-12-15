@@ -5,8 +5,11 @@ import java.util.Random;
 import java.util.Scanner;
 
 import business.control.EmployeeController;
+import business.model.CalculateBonus;
+import business.model.CalculateBonusIncrease;
 import business.model.Date;
 import business.model.Employee;
+import business.model.Salary;
 import business.model.Vacation;
 import business.model.UnifiedVacationBuilder;
 import business.model.DividedVacationBuilder;
@@ -39,7 +42,7 @@ public class EmployeeForm {
 
     int option = menu.nextInt();
 
-    if (option == 9) {
+    if (option == 8) {
       System.out.print("\nbye.");
       menu.close();
       input.close();
@@ -56,7 +59,19 @@ public class EmployeeForm {
       case 2:
         System.out.println("\nAtualizar Empregado");
 
-        Employee employee = new Employee("Unificadas","H44QW4R7J-3085", "canad", date, "Mathias Firmino Andrade", "Rua J. Sales", "teste@gmail.com", "9878-7543");
+        Employee employee = new Employee("Unificadas","RYVWOUGRY-2094", "123", date, "Mathias Firmino Andrade", "Rua J. Sales", "teste@gmail.com", "9878-7543");
+        
+        ArrayList<Salary> salaries = new ArrayList<Salary>();
+        Salary actualSalary = new Salary(5000, 1);
+        salaries.add(actualSalary);
+        employee.setSalaries(salaries);
+ 
+        CalculateBonus calculateBonusStrategy = new CalculateBonusIncrease();
+
+        Salary newSalary = new Salary(calculateBonusStrategy.CalculateBankOfHoursBonus(employee) + actualSalary.getPrice(), 2);
+        salaries.add(newSalary);
+        employee.setSalaries(salaries);
+        System.out.println(employee.getSalaries());
         employeeController.update(employee);
         break;
 
