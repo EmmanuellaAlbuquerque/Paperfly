@@ -8,6 +8,7 @@ public abstract class VacationBuilder {
     }
     public abstract void buildKindVacation();
 	public Vacation getVacation() {
-		return null;
-	}
+		return vacation;
+    }
+    
 }

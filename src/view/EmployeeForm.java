@@ -78,23 +78,24 @@ public class EmployeeForm {
         System.out.print("\nDefinir tipo de férias");
         System.out.print("\ntipo: (1)Unificadas ou (2)Divididas\n");
         kind = input.nextInt();
-        switch(kind){
-          case 1:{
+          if(kind==1){
             VacationDirector vacBuilder = new VacationDirector(new UnifiedVacationBuilder());
             vacBuilder.buildKindVacation();
             Vacation vacation = vacBuilder.getVacation();
+            
             Employee employee1 = new Employee(vacation.getKindVacation(),"H44QW4R7J-3085", "canad", date, "Mathias Firmino Andrade", "Rua J. Sales", "teste@gmail.com", "9878-7543");
             employeeController.update(employee1);
-            break;
+            System.out.println("usuario: " + employee1.getFullname()+"\nférias: " + vacation.getKindVacation());
+
             } 
-            case 2:{
-              VacationDirector vacBuilder = new VacationDirector(new DividedVacationBuilder());
-              vacBuilder.buildKindVacation();
-              Vacation vacation = vacBuilder.getVacation();
-              Employee employee2 = new Employee(vacation.getKindVacation(),"H44QW4R7J-3085", "canad", date, "Mathias Firmino Andrade", "Rua J. Sales", "teste@gmail.com", "9878-7543");
-              employeeController.update(employee2);
-              break;
-              }
+          if(kind==2){
+            VacationDirector vacBuilder = new VacationDirector(new DividedVacationBuilder());
+            vacBuilder.buildKindVacation();
+            Vacation vacation = vacBuilder.getVacation();
+            
+            Employee employee2 = new Employee(vacation.getKindVacation(),"H44QW4R7J-3085", "canad", date, "Mathias Firmino Andrade", "Rua J. Sales", "teste@gmail.com", "9878-7543");
+            employeeController.update(employee2);
+            System.out.println("usuario: " + employee2.getFullname()+"\nférias: " + vacation.getKindVacation());
             }
           }
       case 6:
